@@ -23,7 +23,7 @@ const GameSchema = new mongoose.Schema({
     description: String,
     logoUrl: String,
     devices: String,
-    series: { type: mongoose.Schema.Types.ObjectId, ref: 'Game'/* , default:{} */ }
+    series: String
 },
 {
     timestamps: true

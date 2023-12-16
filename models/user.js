@@ -14,7 +14,8 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     avatarUrl: String,
-
+    isModder: {type: Boolean,
+    default: false},
 },
 {
     timestamps: true

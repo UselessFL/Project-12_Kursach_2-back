@@ -13,3 +13,6 @@ export const loginValidation = [
     body('password').isLength({min:5}),
 ]
 
+export const ModderValidatiom = [
+    body('isModder').isBoolean(),
+]

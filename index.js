@@ -1,10 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
-import { registerValidation,loginValidation } from "./validations/auth.js";
+import { registerValidation,loginValidation,ModderValidatiom } from "./validations/auth.js";
 import { postCreateValidation} from "./validations/Post.js";
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from './controllers/UserController.js'
 import * as PostController from './controllers/PostController.js'
+import * as CommentController from './controllers/CommentController.js'
 import multer from 'multer';
 import handleValidationsErrors from "./utils/handleValidationsErrors.js";
 import fs from 'fs';
@@ -46,6 +47,9 @@ app.get('/', (req, res)=>{
 app.post('/login',loginValidation,handleValidationsErrors,UserController.login )
 app.post('/register',registerValidation, handleValidationsErrors,UserController.register);
 app.get('/me', checkAuth, UserController.getMe)
+app.patch('/modder/:id',ModderValidatiom,UserController.addModder)
+app.get('/getAllUssers',UserController.getAllUssers)
+
 
 app.post('/upload', /* checkAuth,  */upload.single('image'), (req, res) => {
     res.json({
@@ -60,6 +64,11 @@ app.get('/Games/:id', PostController.getOne)
 app.delete('/Games/:id',checkAuth, PostController.remove)
 app.patch('/Games/:id',checkAuth, postCreateValidation,handleValidationsErrors,PostController.update)
 
+// - comments
+app.post('/comments',/* checkAuth, */ CommentController.create)
+app.get('/comments',/* checkAuth, */ CommentController.getAll)
+app.delete('/deleteComm/:id', CommentController.deleteComm)
+app.patch('/updateComm/:id', CommentController.updateComm)
 const port = 4444;
 app.listen(port, (err)=>{
     if(err){

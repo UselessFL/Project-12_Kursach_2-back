@@ -80,3 +80,33 @@ export const getMe = async(req, res)=> {
     res.status(500).json({message: error})
     }
 }
+
+export const addModder = async(req, res) => {
+    try {
+        const gameId = req.params.id;
+        await User.findByIdAndUpdate(
+            gameId,
+            {$set:{isModder:true}}
+        );
+        res.json({
+            success: true,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'не удалось добавить моддератора'
+        })
+    }
+}
+
+export const getAllUssers = async(req,res) =>{
+    try {
+        const games = await User.find();
+        res.json(games);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'не удалось получить игры '
+        })
+    }
+} 

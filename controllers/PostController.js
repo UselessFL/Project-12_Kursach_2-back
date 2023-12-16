@@ -86,7 +86,7 @@ export const remove = async(req,res) =>{
     try {
         const gameId = req.params.id;
         
-        const game = await GameModel.findOneAndDelete(gameId);
+        const game = await GameModel.findOneAndDelete({_id: gameId});
         if(!game){ return (res.status(404).json({message:"нет игры"}))}
         res.json({message: 'succsess'})
     } catch (error) {
@@ -129,7 +129,7 @@ export const create = async(req,res)=> {
     try {
         const doc = new GameModel({
             title: req.body.title,
-            genre: req.body.genre,
+            genre: req.body.genre.split(','),
             type: req.body.type,
             avatarUrl: req.body.avatarUrl,
             releaseDate: req.body.releaseDate,
